@@ -13,6 +13,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using LavadoActivosApi.Data.Interface;
+using LavadoActivosApi.Data.Repository;
 
 namespace LavadoActivosApi
 {
@@ -35,6 +37,17 @@ namespace LavadoActivosApi
                                       .AllowAnyMethod()
                                       .AllowAnyHeader());
             });
+
+            services.AddScoped<IGraficoRepository, GraficoRepository>();
+            services.AddScoped<IExcelRepository, ExcelRepository>();
+            services.AddScoped<IBitacoraRepository, BitacoraRepository>();
+            services.AddScoped<IPaisRepository, PaisRepository>();
+            services.AddScoped<IParametroRepository, ParametroRepository>();
+            services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+            services.AddScoped<IUbigeoRepository, UbigeoRepository>();
+            services.AddScoped<ICustomerRepository, CustomerRepository>();
+            services.AddScoped<ILoginRepository, LoginRepository>();
+            services.AddScoped<IOperacionRepository, OperacionRepository>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                .AddJwtBearer(options =>

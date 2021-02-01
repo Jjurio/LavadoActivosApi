@@ -17,46 +17,14 @@ namespace LavadoActivosApi.Controllers
         {
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
-        [HttpPost("InsertarBitacora")]
-        public async Task<IActionResult> InsertarExcel([FromBody] Bitacora bitacora)
-        {
-            try
-            {
-                var respuesta = await _repository.InsertarBitacora(bitacora);
-                if (respuesta=="true")
-                {
-                    return Ok(new
-                    {
-                        IsSuccess = true,
-                        Message = "Se insertó correctamente.",
-                        data = respuesta
-                    });
-                }
-                else
-                {
-                    return Ok(new
-                    {
-                        IsSuccess = false,
-                        Message = "Hubo un error en el registro.",
-                        total = 0,
-                        data = respuesta
-                    });
-                }
-                
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Internal server error: { ex }");
-            }
 
-        }
-        [HttpGet("ListarBitacora")]
-        public async Task<IActionResult> ListarBitacora(int ncaso)
+        [HttpGet("Listar")]
+        public async Task<IActionResult> ListarBitacora(int idAlerta)
         {
             try
             {
 
-                var resultado = await _repository.ListarBitacora(ncaso);
+                var resultado = await _repository.ListarBitacora(idAlerta);
                 if (resultado.Count == 0 || resultado == null)
                 {
                     return Ok(new
@@ -79,5 +47,67 @@ namespace LavadoActivosApi.Controllers
                 return StatusCode(500, $"Internal server error: { ex }");
             }
         }
+
+        [HttpGet("Traer")]
+        public async Task<IActionResult> TraerBitacora(int idAlerta)
+        {
+            try
+            {
+
+                var resultado = await _repository.TraerBitacora(idAlerta);
+                if (resultado == null)
+                {
+                    return Ok(new
+                    {
+                        IsSuccess = false,
+                        Message = "No se encontraron registros",
+                        total = 0,
+                        data = resultado
+                    });
+                }
+                return Ok(new
+                {
+                    IsSuccess = true,
+                    Message = "Se listó satisfactoriamente",
+                    data = resultado
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: { ex }");
+            }
+        }
+
+
+        [HttpPost("Insertar")]
+        public async Task<IActionResult> InsertarBitacora([FromBody] Bitacora bitacora)
+        {
+            try
+            {
+                var resultado = await _repository.InsertarBitacora(bitacora);
+                if (resultado == null)
+                {
+                    return Ok(new
+                    {
+                        IsSuccess = false,
+                        Message = "No se encontraron registros",
+                        total = 0,
+                        data = resultado
+                    });
+                }
+                return Ok(new
+                {
+                    IsSuccess = true,
+                    Message = "Se listó satisfactoriamente",
+                    data = resultado
+                });  
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: { ex }");
+            }
+
+        }
+        
     }
 }

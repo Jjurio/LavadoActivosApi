@@ -16,7 +16,7 @@ namespace LavadoActivosApi.Controllers
         {
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
-        [HttpGet("ListarUsuario")]
+        [HttpGet("Listar")]
         public async Task<IActionResult> ListarUsuario(int nidPerfil)
         {
             try

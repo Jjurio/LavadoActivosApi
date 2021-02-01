@@ -20,7 +20,7 @@ namespace LavadoActivosApi.Data.Repository
         {
             using (SqlConnection sql = new SqlConnection(_connectionString))
             {
-                using (SqlCommand cmd = new SqlCommand("sp_MoneyL_ListarUsuario", sql))
+                using (SqlCommand cmd = new SqlCommand("sp_LAVADOACTIVO_USUARIO_LISTAR", sql))
                 {
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
                     cmd.Parameters.Add(new SqlParameter("@idPerfil", idPerfil));
@@ -44,10 +44,11 @@ namespace LavadoActivosApi.Data.Repository
             return new UsuarioList()
             {
                 nidUser = (int)reader["nidUser"],
-                nombre = reader["nombre"].ToString(),
+                vnombres = reader["vnombres"].ToString(),
+                vpaterno = reader["vpaterno"].ToString(),
+                vmaterno = reader["vmaterno"].ToString(),
                 nidPerfil = (int)reader["nidPerfil"],
-                vnombrePerfil = reader["vnombrePerfil"].ToString(),
-                nestado = (int)reader["nestado"]
+                perfil = reader["perfil"].ToString(),
             };
         }
     }

@@ -16,17 +16,17 @@ namespace LavadoActivosApi.Data.Repository
         {
             _connectionString = configuration.GetConnectionString("defaultConnection");
         }
-        public async Task<List<CustomerList>> ListarCustomer(int NroDePagina, int RegPorPag, string code, int nidPerfil)
+        public async Task<List<CustomerList>> ListarCustomer()
         {
             using (SqlConnection sql = new SqlConnection(_connectionString))
             {
                 using (SqlCommand cmd = new SqlCommand("sp_MoneyL_ListCustomer", sql))
                 {
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                    cmd.Parameters.Add(new SqlParameter("@NroDePagina", NroDePagina));
-                    cmd.Parameters.Add(new SqlParameter("@RegPorPag", RegPorPag));
-                    cmd.Parameters.Add(new SqlParameter("@code", code));
-                    cmd.Parameters.Add(new SqlParameter("@nidPerfil", nidPerfil));
+                    //cmd.Parameters.Add(new SqlParameter("@NroDePagina", NroDePagina));
+                    //cmd.Parameters.Add(new SqlParameter("@RegPorPag", RegPorPag));
+                    //cmd.Parameters.Add(new SqlParameter("@code", code));
+                    //cmd.Parameters.Add(new SqlParameter("@nidPerfil", nidPerfil));
 
                     var response = new List<CustomerList>();
                     await sql.OpenAsync();

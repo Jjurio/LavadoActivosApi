@@ -1,44 +1,44 @@
-﻿using LavadoActivosApi.Data.Interface;
-using LavadoActivosApi.Models;
-using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LavadoActivosApi.Data.Interface;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace LavadoActivosApi.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class LoginController : Controller
+    public class CondicionClienteController : ControllerBase
     {
-        private readonly ILoginRepository _repository;
-        public LoginController(ILoginRepository repository)
+        private readonly ICondicionClienteRepository _repository;
+        public CondicionClienteController(ICondicionClienteRepository repository)
         {
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
-        [HttpPost("Login")]
-        public async Task<IActionResult> Login(Login login)
+
+        [HttpGet("Listar")]
+        public async Task<IActionResult> listarCondicionCliente()
         {
             try
             {
-
-                var resultado = await _repository.Login(login);
-                if (resultado == null)
+                var resp = await _repository.listarCondicionCliente();
+                if (resp.Count == 0 || resp == null)
                 {
                     return Ok(new
                     {
                         IsSuccess = false,
                         Message = "No se encontraron registros",
                         total = 0,
-                        data = resultado
+                        data = resp
                     });
                 }
                 return Ok(new
                 {
                     IsSuccess = true,
-                    Message = "Se listó satisfactoriamente",
-                    data = resultado
+                    Message = "Se listo satisfactoriamente",
+                    data = resp
                 });
             }
             catch (Exception ex)

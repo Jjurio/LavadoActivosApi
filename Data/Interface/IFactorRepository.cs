@@ -1,14 +1,13 @@
-﻿using System;
+﻿using LavadoActivosApi.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using LavadoActivosApi.Models;
 
 namespace LavadoActivosApi.Data.Interface
 {
-    public interface ILoginRepository
+    public interface IFactorRepository
     {
-        public Task<Login> Login(Login login);
-
+        public Task<List<Factor>> listarFactor();
     }
 }

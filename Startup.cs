@@ -48,6 +48,13 @@ namespace LavadoActivosApi
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<ILoginRepository, LoginRepository>();
             services.AddScoped<IOperacionRepository, OperacionRepository>();
+            services.AddScoped<IClienteRepository, ClienteRepository>();
+            services.AddScoped<IAlertaRepository, AlertaRepository>();
+            services.AddScoped<ITipoDocumentoRepository, TipoDocumentoRepository>();
+            services.AddScoped<ITipoPonderacionRepository, TipoPonderacionRepository>();
+            services.AddScoped<IFactorRepository, FactorRepository>();
+            services.AddScoped<ISubFactorRepository, SubFactorRepository>();
+            services.AddScoped<ICondicionClienteRepository, CondicionClienteRepository>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                .AddJwtBearer(options =>

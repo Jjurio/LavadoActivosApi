@@ -16,24 +16,24 @@ namespace LavadoActivosApi.Data.Repository
         {
             _connectionString = configuration.GetConnectionString("defaultConnection");
         }
-        public async Task<List<Login>> Login(string vUser, string vpassword)
+        public async Task<Login> Login(Login login)
         {
             using (SqlConnection sql = new SqlConnection(_connectionString))
             {
-                using (SqlCommand cmd = new SqlCommand("sp_MoneyL_LoginUser", sql))
+                using (SqlCommand cmd = new SqlCommand("sp_LAVADOACTIVO_USUARIO_LOGIN", sql))
                 {
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                    cmd.Parameters.Add(new SqlParameter("@vUser", vUser));
-                    cmd.Parameters.Add(new SqlParameter("@vpassword", vpassword));
+                    cmd.Parameters.Add(new SqlParameter("@vuser", login.vuser));
+                    cmd.Parameters.Add(new SqlParameter("@vpassword", login.vpassword));
 
-                    var response = new List<Login>();
+                    var response = new Login();
                     await sql.OpenAsync();
 
                     using (var reader = await cmd.ExecuteReaderAsync())
                     {
                         while (await reader.ReadAsync())
                         {
-                            response.Add(MaptoLogin(reader));
+                            response = MaptoLogin(reader);
                         }
                     }
                     return response;
@@ -44,17 +44,14 @@ namespace LavadoActivosApi.Data.Repository
         {
             return new Login()
             {
-                respuesta = reader["respuesta"].ToString(),
                 nidUser = (int)reader["nidUser"],
-                vdescripcion = reader["vdescripcion"].ToString(),
+                nidPerfil = (int)reader["nidPerfil"],
                 vuser = reader["vuser"].ToString(),
+                perfil = reader["perfil"].ToString(),
                 vnombres = reader["vnombres"].ToString(),
                 vpaterno = reader["vpaterno"].ToString(),
                 vmaterno = reader["vmaterno"].ToString(),
-                vsexo = (int)reader["vsexo"],
-                vemail = reader["vemail"].ToString(),
-                profdescripcion = reader["profdescripcion"].ToString(),
-                nidPerfil = (int)reader["nidPerfil"]
+                vemail = reader["vemail"].ToString()
             };
         }
     }

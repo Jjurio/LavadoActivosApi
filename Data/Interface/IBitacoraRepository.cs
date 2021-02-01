@@ -8,8 +8,9 @@ namespace LavadoActivosApi.Data.Interface
 {
     public interface IBitacoraRepository
     {
-        public Task<string> InsertarBitacora(Bitacora bitacora);
-        public Task<List<BitacoraList>> ListarBitacora(int ncaso);
+        public Task<List<BitacoraList>> ListarBitacora(int idAlerta);
+        public Task<Bitacora> TraerBitacora(int idAlerta);
+        public Task<Alerta> InsertarBitacora(Bitacora bitacora);
 
     }
 }
